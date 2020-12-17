@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import firebase from "firebase/app";
+import { BrowserRouter } from 'react-router-dom';
 
 const firebaseConfig = {
     apiKey: "AIzaSyBgCes5l0pxzkp9wXByw0x8v0gVKt5A0bo",
@@ -18,11 +19,14 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig)
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+    <BrowserRouter>
+        <React.StrictMode>
+            <App/>
+        </React.StrictMode>
+    </BrowserRouter>,
+document.getElementById('root')
+)
+;
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
