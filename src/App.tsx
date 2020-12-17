@@ -1,6 +1,5 @@
-import React, {useEffect} from 'react';
+import React, {useState} from 'react';
 import './App.scss';
-import firebase from "firebase/app";
 import 'firebase/database';
 import {NavLink, Route} from 'react-router-dom';
 import {Login} from "./UI/pages/Login/Login";
@@ -10,14 +9,12 @@ import {Header} from "./UI/components/common/header/Header";
 
 function App() {
 
-    useEffect(() => {
-        const db = firebase.database();
-        console.log(db)
-    })
+    const [isAuth, setAuth] = useState<boolean>(false);
+    // const [redirect, setRedirect] = useState<boolean>(false);
 
     return (
         <div className="App">
-            <Header/>
+            <Header isAuth={isAuth} />
             <div>
                 <Route path='/' render={() => <div>
                     <NavLink to={'/login'}> Sign in </NavLink>
@@ -25,13 +22,13 @@ function App() {
                     <NavLink to={'/register'}> Sign up </NavLink>
                 </div>} exact={true}/>
                 <Route path={'/login'} render={() =>
-                    <Login/>}
+                    <Login isAuth={isAuth} setAuth={setAuth} />}
                 />
                 <Route path={'/register'} render={() =>
                     <Register/>}
                 />
                 <Route path={'/timers'} render={() =>
-                    <Timers/>}
+                    <Timers />}
                 />
             </div>
         </div>

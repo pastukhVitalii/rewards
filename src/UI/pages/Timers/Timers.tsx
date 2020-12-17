@@ -1,6 +1,7 @@
 import React from "react";
 
-export const Timers = React.memo(() => {
+type PropsType = {}
+export const Timers = React.memo((props: PropsType) => {
 
     console.log('timers page');
 
