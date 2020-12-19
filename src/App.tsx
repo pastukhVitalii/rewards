@@ -10,19 +10,19 @@ import {Header} from "./UI/components/common/header/Header";
 function App() {
 
     const [isAuth, setAuth] = useState<boolean>(false);
-    const [width, setWidth] = useState({ windowWidth: window.innerWidth });
+    const [width, setWidth] = useState({windowWidth: window.innerWidth});
 
     let handleResize = () => {
-        setWidth({ windowWidth: window.innerWidth })
+        setWidth({windowWidth: window.innerWidth})
     }
 
-    useEffect( () => {
+    useEffect(() => {
         window.addEventListener("resize", handleResize);
     })
-    console.log(width)
+
     return (
         <div className="App">
-            <Header isAuth={isAuth} />
+            <Header isAuth={isAuth}/>
             <div>
                 <Route path='/' render={() => <div>
                     <NavLink to={'/login'}> Sign in </NavLink>
@@ -30,7 +30,7 @@ function App() {
                     <NavLink to={'/register'}> Sign up </NavLink>
                 </div>} exact={true}/>
                 <Route path={'/login'} render={() =>
-                    <Login isAuth={isAuth} setAuth={setAuth} />}
+                    <Login isAuth={isAuth} setAuth={setAuth}/>}
                 />
                 <Route path={'/register'} render={() =>
                     <Register/>}
