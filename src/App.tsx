@@ -2,15 +2,14 @@ import React, {useState} from 'react';
 import './App.scss';
 import 'firebase/database';
 import {NavLink, Route} from 'react-router-dom';
-import {Login} from "./UI/pages/Login/Login";
-import {Register} from "./UI/pages/Register/Register";
+import Login from "./UI/pages/Login/Login";
+import Register from "./UI/pages/Register/Register";
 import {Timers} from "./UI/pages/Timers/Timers";
 import {Header} from "./UI/components/common/header/Header";
 
 function App() {
 
     const [isAuth, setAuth] = useState<boolean>(false);
-    // const [redirect, setRedirect] = useState<boolean>(false);
 
     return (
         <div className="App">

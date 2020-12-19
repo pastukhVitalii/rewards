@@ -1,10 +1,10 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React, {ChangeEvent, useCallback, useEffect, useState} from "react";
 import {Input} from "../../components/common/input/Input";
 import {Button} from "../../components/common/button/Button";
 import firebase from "firebase";
-import {Redirect} from "react-router-dom";
+import {withRouter} from "react-router-dom";
 
-export const Register = React.memo(() => {
+const Register = React.memo((props: any) => {
 
     console.log('register page');
 
@@ -15,7 +15,7 @@ export const Register = React.memo(() => {
 
     const [firsName, setFirsName] = useState('Vitaliy');
     const [lastName, setLastName] = useState('Pastukh');
-    const [email, setEmail] = useState('test@gmail.com');
+    const [email, setEmail] = useState('test077@gmail.com');
     const [pass, setPass] = useState('test1234');
 
     const setFirstNameCallback = useCallback((e) => {
@@ -30,16 +30,19 @@ export const Register = React.memo(() => {
     const setEmailCallback = useCallback((e) => {
         setEmail(e.currentTarget.value)
     }, []);
-
+    console.log(email);
     const setPasswordCallback = useCallback((e) => {
         setPass(e.currentTarget.value)
     }, []);
 
-    const signUpCallback = useCallback(() => {
+    const signUpCallback = () => {
         firebase.auth().createUserWithEmailAndPassword(email, pass)
-            .then(res => <Redirect to={'/login'}/>)
+            .then(res => firebase.auth().currentUser?.updateProfile({
+                displayName: `${firsName} ${lastName}`
+            })).then(props.history.replace('/timers'))
             .catch((error: string) => console.log(error));
-    }, []);
+
+    }
 
     return (
         <>
@@ -49,8 +52,10 @@ export const Register = React.memo(() => {
                 <Input type={''} placeholder={'Last name'} value={lastName} onChange={setLastNameCallback}/>
                 <Input type={''} placeholder={'e-mail'} value={email} onChange={setEmailCallback}/>
                 <Input type={''} placeholder={'password'} value={pass} onChange={setPasswordCallback}/>
-                <Button type={''} name={'Register'} spiner={false} disable={false} onClick={signUpCallback}/>
+                <Button type={''} name={'Register'} spinner={false} disable={false} onClick={signUpCallback}/>
             </div>
         </>
     );
 });
+
+export default withRouter(Register)

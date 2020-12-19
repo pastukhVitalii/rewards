@@ -4,8 +4,6 @@ import './Header.scss'
 
 type PropsType = {
     isAuth: boolean
-    /*redirect: boolean
-    setRedirect: (redirect: boolean) => any*/
 }
 export const Header = React.memo((props: PropsType) => {
     return (
