@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.scss';
 import 'firebase/database';
 import {NavLink, Route} from 'react-router-dom';
@@ -10,7 +10,16 @@ import {Header} from "./UI/components/common/header/Header";
 function App() {
 
     const [isAuth, setAuth] = useState<boolean>(false);
+    const [width, setWidth] = useState({ windowWidth: window.innerWidth });
 
+    let handleResize = () => {
+        setWidth({ windowWidth: window.innerWidth })
+    }
+
+    useEffect( () => {
+        window.addEventListener("resize", handleResize);
+    })
+    console.log(width)
     return (
         <div className="App">
             <Header isAuth={isAuth} />
@@ -27,7 +36,7 @@ function App() {
                     <Register/>}
                 />
                 <Route path={'/timers'} render={() =>
-                    <Timers />}
+                    <Timers width={width.windowWidth}/>}
                 />
             </div>
         </div>
