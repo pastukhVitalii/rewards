@@ -4,7 +4,7 @@ import 'firebase/database';
 import {NavLink, Route} from 'react-router-dom';
 import Login from "./UI/pages/Login/Login";
 import Register from "./UI/pages/Register/Register";
-import {Timers} from "./UI/pages/Timers/Timers";
+import Timers from "./UI/pages/Timers/Timers";
 import {Header} from "./UI/components/common/header/Header";
 
 function App() {
@@ -21,9 +21,9 @@ function App() {
     })
 
     return (
-        <div className="App">
+        <div >
             <Header/>
-            <div>
+            <div className="App">
                 <Route path='/' render={() => <div>
                     <NavLink to={'/login'}> Sign in </NavLink>
                     <div>or</div>

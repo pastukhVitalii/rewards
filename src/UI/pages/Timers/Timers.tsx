@@ -1,18 +1,32 @@
-import React from "react";
+import React, {useCallback} from "react";
 import {Timer} from "./Timer";
+import firebase from "firebase";
+import './Timers.scss';
+import {withRouter} from "react-router-dom";
 
 type PropsType = {
     width: number
 }
-export const Timers = React.memo((props: PropsType) => {
 
-    const active = props.width < 600;
+export const Timers = React.memo((props: any) => {
+
+    const logOutCallback = useCallback(() => {
+        firebase.auth().signOut()
+            .then((res) => {
+
+            })
+            .then(props.history.replace('/login'))
+            .catch(error => console.log(error))
+    }, []);
+
+    const active = props.width < 760;
     console.log(active);
     return (
-        <div>
-            {props.width < 600 ? <span>Mobile</span> : <span>Desktop</span>}
-            {!active ? <Timer device={props.width < 600 ? 'mobile' : 'desktop'}/> : ''}
-            {active ? <Timer device={props.width < 600 ? 'mobile' : 'desktop'}/> : ''}
+        <div className={'timer_page'}>
+            <Timer active={!active} device={props.width < 760 ? 'mobile' : 'desktop'} title={'Desktop'}/>
+            <Timer active={active} device={!(props.width < 760) ? 'mobile' : 'desktop'} title={'Mobile'}/>
+            <span className={'log_out'} onClick={logOutCallback}>Log out</span>
         </div>
     )
-})
+});
+export default withRouter(Timers);

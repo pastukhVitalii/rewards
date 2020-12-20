@@ -1,5 +1,53 @@
 .App {
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
+.main {
+  background-color: #C4C4C4;
+  width: 588px;
+  height: 576px;
+  border-radius: 57px;
+}
+
+.form {
+  height: 300px;
+}
+
+.title {
+  margin: 50px 0 30px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 36px;
+  line-height: 54px;
+  letter-spacing: 0.0075em;
+  color: #000000;
+}
+
+.link {
+  color: #1d1d1d;
+}
+
+.secondary_title {
+  letter-spacing: 0.75px;
+  text-decoration-line: underline;
+  color: #88888C;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 20px;
+  line-height: 110%;
+}
+
+// RESPONSIVE
+
+@media (max-width: 760px) {
+  .main {
+    width: 340px;
+  }
+  .secondary_title {
+    font-size: 15px;
+  }
+}
 

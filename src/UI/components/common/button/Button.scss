@@ -1,38 +1,32 @@
 .button {
-    width: 200px;
-    height: 50px;
-    outline: none;
-    border: 1px solid black;
-    text-transform: uppercase;
-    position: relative;
-    margin: 10px 0;
-    cursor: pointer;
+  width: 277px;
+  height: 73px;
+  outline: none;
+  border: none;
+  position: relative;
+  margin: 20px 0 10px;
+  cursor: pointer;
+  background: #828282;
+  border-radius: 63px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 30px;
+  line-height: 47px;
+  color: #000000;
 }
 
 button {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
-.default {
-    background-color: white;
-}
+// RESPONSIVE
 
-.primary {
-    background-color: aqua;
-}
-
-.danger {
-    background-color: red;
-}
-
-.button img {
-    height: 48px;
-    position: absolute;
-    left: 0;
-    top: 0;
-}
-
-.small {
-    width: 100px;
-    height: 35px;
+@media (max-width: 760px) {
+  .button {
+    width: 195px;
+    height: 47px;
+    font-size: 24px;
+    line-height: 28px;
+    margin: 50px 0 10px;
+  }
 }

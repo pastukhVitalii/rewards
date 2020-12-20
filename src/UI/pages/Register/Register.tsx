@@ -2,7 +2,8 @@ import React, {useCallback, useEffect, useState} from "react";
 import {Input} from "../../components/common/input/Input";
 import {Button} from "../../components/common/button/Button";
 import firebase from "firebase";
-import {withRouter} from "react-router-dom";
+import {NavLink, withRouter} from "react-router-dom";
+import '../../../App.scss';
 
 const Register = React.memo((props: any) => {
 
@@ -43,37 +44,26 @@ const Register = React.memo((props: any) => {
                 desktop: 0,
                 mobile: 0
             }
-            /*desktop: {
-                    hours: 0,
-                    minutes: 0,
-                    seconds: 0,
-                },
-                mobile: {
-                    hours: 0,
-                    minutes: 0,
-                    seconds: 0,
-                }*/
         }
         firebase.auth().createUserWithEmailAndPassword(email, pass)
-            .then(res => firebase.auth().currentUser?.updateProfile({
-                displayName: `${firsName} ${lastName}`
-            }))
             .then(res => firebase.database().ref(`users/${firebase.auth().currentUser?.uid}`).set(name))
             .then(props.history.replace('/timers'))
             .catch((error: string) => console.log(error));
     }
 
     return (
-        <>
-            <div>
-                Register
+        <div className={'main'}>
+            <div className={'title'}>Register</div>
+            <div className={'form'}>
                 <Input type={''} placeholder={'First name'} value={firsName} onChange={setFirstNameCallback}/>
                 <Input type={''} placeholder={'Last name'} value={lastName} onChange={setLastNameCallback}/>
-                <Input type={''} placeholder={'e-mail'} value={email} onChange={setEmailCallback}/>
-                <Input type={''} placeholder={'password'} value={pass} onChange={setPasswordCallback}/>
-                <Button type={''} name={'Register'} spinner={false} disable={false} onClick={signUpCallback}/>
+                <Input type={''} placeholder={'Email'} value={email} onChange={setEmailCallback}/>
+                <Input type={''} placeholder={'Password'} value={pass} onChange={setPasswordCallback}/>
             </div>
-        </>
+            <Button type={''} name={'Register'} spinner={false} disable={false} onClick={signUpCallback}/>
+            <div className={'secondary_title'}>Already registered? <NavLink className={'link'}
+                                                                            to={'/login'}> Log in</NavLink></div>
+        </div>
     );
 });
 

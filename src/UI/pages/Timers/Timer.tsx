@@ -1,8 +1,12 @@
 import React, {useEffect, useState} from "react";
 import firebase from "firebase";
+import './Timers.scss';
+import timer from '../../../timer.png';
 
 type PropsType = {
     device: 'mobile' | 'desktop'
+    active: boolean
+    title: string
 }
 
 export const Timer = React.memo((props: PropsType) => {
@@ -20,7 +24,7 @@ export const Timer = React.memo((props: PropsType) => {
                 });
             }
         })
-    }, [])
+    }, [props.device])
 
     // @ts-ignore
     let hours = Math.floor(seconds / 60 / 60);
@@ -31,7 +35,6 @@ export const Timer = React.memo((props: PropsType) => {
     // @ts-ignore
     let sec = seconds % 60;
 
-
     let timers = [
         hours.toString().padStart(2, '0'),
         minutes.toString().padStart(2, '0'),
@@ -39,28 +42,30 @@ export const Timer = React.memo((props: PropsType) => {
     ].join(':');
 
     useEffect(() => {
-        let interval: any = null;
-        interval = setInterval(() => {
-            // @ts-ignore
-            setSeconds(seconds + 1);
-        }, 1000);
-        firebase.auth().onAuthStateChanged(user => {
-            if (user) {
-                const db = firebase.database();
-                db.ref(`users/${user.uid}/time/${props.device}`).transaction(function () {
-                    return seconds
-                    // return `${hours} : ${minutes} : ${seconds}`
-                }).catch(error => console.log(error));
-                console.log('your data written to db');
-            }
-        })
-        return () => clearInterval(interval);
-
-    }, [seconds, setSeconds]);
+        if (props.active) {
+            let interval: any = null;
+            interval = setInterval(() => {
+                // @ts-ignore
+                setSeconds(seconds + 1);
+            }, 1000);
+            firebase.auth().onAuthStateChanged(user => {
+                if (user) {
+                    const db = firebase.database();
+                    db.ref(`users/${user.uid}/time/${props.device}`).transaction(function () {
+                        return seconds
+                    }).catch(error => console.log(error));
+                    console.log('your data written to db');
+                }
+            })
+            return () => clearInterval(interval);
+        }
+    }, [seconds, setSeconds, props.device]);
 
     return (
         <div>
-            <div>{timers}</div>
+            <div className={'timer_title'}>{props.title}</div>
+            <div className={'timer'}><img src={timer} alt="timer"/></div>
+            <div className={'timer_title'}>{timers}</div>
         </div>
     )
 })

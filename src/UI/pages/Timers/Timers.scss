@@ -1,0 +1,43 @@
+.timer_page {
+  width: 80%;
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.timer {
+  background-color: #C4C4C4;
+  width: 380px;
+  height: 400px;
+  border-radius: 57px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.timer_title {
+  margin: 0 0 30px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 36px;
+  line-height: 54px;
+  letter-spacing: 0.0075em;
+  color: #000000;
+}
+
+.log_out {
+  position: absolute;
+  top: 70px;
+  right: 20px;
+  color: #1d1d1d;
+}
+
+// RESPONSIVE
+
+@media (max-width: 760px) {
+  .timer_page {
+    flex-direction: column;
+  }
+}
+
