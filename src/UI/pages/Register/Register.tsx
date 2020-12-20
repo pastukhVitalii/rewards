@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useCallback, useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {Input} from "../../components/common/input/Input";
 import {Button} from "../../components/common/button/Button";
 import firebase from "firebase";
@@ -36,12 +36,21 @@ const Register = React.memo((props: any) => {
     }, []);
 
     const signUpCallback = () => {
+        const name = {
+            firsName,
+            lastName,
+            time: {
+                desktop: 0,
+                mobile: 0
+            }
+        }
         firebase.auth().createUserWithEmailAndPassword(email, pass)
             .then(res => firebase.auth().currentUser?.updateProfile({
                 displayName: `${firsName} ${lastName}`
-            })).then(props.history.replace('/timers'))
+            }))
+            .then(res => firebase.database().ref(`users/${firebase.auth().currentUser?.uid}`).set(name))
+            .then(props.history.replace('/timers'))
             .catch((error: string) => console.log(error));
-
     }
 
     return (
@@ -58,4 +67,4 @@ const Register = React.memo((props: any) => {
     );
 });
 
-export default withRouter(Register)
+export default withRouter(Register);

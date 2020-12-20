@@ -15,12 +15,14 @@ export const Timers = React.memo((props: PropsType) => {
         return firebase.auth().currentUser && firebase.auth().currentUser?.displayName;
     }
     const active = props.width < 600;
+
     return (
         <div>
             <div>{firebase.auth().currentUser?.displayName}</div>
             {props.width < 600 ? <span>Mobile</span> : <span>Desktop</span>}
-            <Timer active={!active}/>
-            <Timer active={active}/>
+            <Timer active={!active} device={props.width < 600? 'mobile': 'desktop'}/>
+            {/*<Timer active={active} device={props.width < 600? 'mobile': 'desktop'}/>*/}
+            {/*<Timer active={active}/>*/}
         </div>
     )
 })

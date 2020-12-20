@@ -2,11 +2,27 @@ import React, {useEffect, useState} from "react";
 import firebase from "firebase";
 
 type PropsType = {
+    device: 'mobile' | 'desktop'
     active: boolean
 }
+
 export const Timer = React.memo((props: PropsType) => {
 
-    const [seconds, setSeconds] = useState(0);
+    const [seconds, setSeconds] = useState<number | undefined>();
+
+    useEffect(() => {
+        firebase.auth().onAuthStateChanged(user => {
+            if (user) {
+                const db = firebase.database();
+                const ref = db.ref(`users/${user.uid}/time/${props.device}`);
+                ref.on('value', (snapshot) => {
+                    console.log(snapshot.val());
+                    setSeconds(snapshot.val());
+                });
+            }
+        })
+    }, [])
+
     const [minutes, setMinutes] = useState(0);
     const [hours, setHours] = useState(0);
 
@@ -14,26 +30,25 @@ export const Timer = React.memo((props: PropsType) => {
         if (props.active) {
             let interval: any = null;
             interval = setInterval(() => {
+                // @ts-ignore
                 setSeconds(seconds + 1);
             }, 1000);
-            if (seconds === 60) {
-                setSeconds(0);
-                setMinutes(minutes + 1);
-            }
-            if (minutes === 60) {
-                setMinutes(0);
-                setHours(hours + 1);
-            }
-            const db = firebase.database();
-            db.ref('times').transaction(function () {
-                return `${hours} : ${minutes} : ${seconds}`
+            firebase.auth().onAuthStateChanged(user => {
+                if (user) {
+                    const db = firebase.database();
+                    db.ref(`users/${user.uid}/time/${props.device}`).transaction(function () {
+                        return seconds
+                        // return `${hours} : ${minutes} : ${seconds}`
+                    }).catch(error => console.log(error));
+
+                    console.log('your data written to db');
+                }
             })
-            console.log('your data written to db');
+
             return () => clearInterval(interval);
         }
-    }, [seconds]);
+    }, [seconds, setSeconds]);
 
-    console.log(props.active)
     return (
         <div>
             <span>{hours}</span>
