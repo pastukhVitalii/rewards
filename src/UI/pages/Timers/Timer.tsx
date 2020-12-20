@@ -3,7 +3,6 @@ import firebase from "firebase";
 
 type PropsType = {
     device: 'mobile' | 'desktop'
-    active: boolean
 }
 
 export const Timer = React.memo((props: PropsType) => {
@@ -23,39 +22,45 @@ export const Timer = React.memo((props: PropsType) => {
         })
     }, [])
 
-    const [minutes, setMinutes] = useState(0);
-    const [hours, setHours] = useState(0);
+    // @ts-ignore
+    let hours = Math.floor(seconds / 60 / 60);
+
+    // @ts-ignore
+    let minutes = Math.floor(seconds / 60) - (hours * 60);
+
+    // @ts-ignore
+    let sec = seconds % 60;
+
+
+    let timers = [
+        hours.toString().padStart(2, '0'),
+        minutes.toString().padStart(2, '0'),
+        sec.toString().padStart(2, '0')
+    ].join(':');
 
     useEffect(() => {
-        if (props.active) {
-            let interval: any = null;
-            interval = setInterval(() => {
-                // @ts-ignore
-                setSeconds(seconds + 1);
-            }, 1000);
-            firebase.auth().onAuthStateChanged(user => {
-                if (user) {
-                    const db = firebase.database();
-                    db.ref(`users/${user.uid}/time/${props.device}`).transaction(function () {
-                        return seconds
-                        // return `${hours} : ${minutes} : ${seconds}`
-                    }).catch(error => console.log(error));
+        let interval: any = null;
+        interval = setInterval(() => {
+            // @ts-ignore
+            setSeconds(seconds + 1);
+        }, 1000);
+        firebase.auth().onAuthStateChanged(user => {
+            if (user) {
+                const db = firebase.database();
+                db.ref(`users/${user.uid}/time/${props.device}`).transaction(function () {
+                    return seconds
+                    // return `${hours} : ${minutes} : ${seconds}`
+                }).catch(error => console.log(error));
+                console.log('your data written to db');
+            }
+        })
+        return () => clearInterval(interval);
 
-                    console.log('your data written to db');
-                }
-            })
-
-            return () => clearInterval(interval);
-        }
     }, [seconds, setSeconds]);
 
     return (
         <div>
-            <span>{hours}</span>
-            <span>:</span>
-            <span>{minutes}</span>
-            <span>:</span>
-            <span>{seconds}</span>
+            <div>{timers}</div>
         </div>
     )
 })

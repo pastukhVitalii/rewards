@@ -22,7 +22,7 @@ function App() {
 
     return (
         <div className="App">
-            <Header isAuth={isAuth}/>
+            <Header/>
             <div>
                 <Route path='/' render={() => <div>
                     <NavLink to={'/login'}> Sign in </NavLink>

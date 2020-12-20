@@ -43,6 +43,16 @@ const Register = React.memo((props: any) => {
                 desktop: 0,
                 mobile: 0
             }
+            /*desktop: {
+                    hours: 0,
+                    minutes: 0,
+                    seconds: 0,
+                },
+                mobile: {
+                    hours: 0,
+                    minutes: 0,
+                    seconds: 0,
+                }*/
         }
         firebase.auth().createUserWithEmailAndPassword(email, pass)
             .then(res => firebase.auth().currentUser?.updateProfile({

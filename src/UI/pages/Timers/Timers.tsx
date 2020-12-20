@@ -1,5 +1,4 @@
-import React, {useEffect} from "react";
-import firebase from "firebase";
+import React from "react";
 import {Timer} from "./Timer";
 
 type PropsType = {
@@ -7,22 +6,13 @@ type PropsType = {
 }
 export const Timers = React.memo((props: PropsType) => {
 
-    useEffect(() => {
-        getCurrentUsername();
-    }, []);
-
-    const getCurrentUsername = () => {
-        return firebase.auth().currentUser && firebase.auth().currentUser?.displayName;
-    }
     const active = props.width < 600;
-
+    console.log(active);
     return (
         <div>
-            <div>{firebase.auth().currentUser?.displayName}</div>
             {props.width < 600 ? <span>Mobile</span> : <span>Desktop</span>}
-            <Timer active={!active} device={props.width < 600? 'mobile': 'desktop'}/>
-            {/*<Timer active={active} device={props.width < 600? 'mobile': 'desktop'}/>*/}
-            {/*<Timer active={active}/>*/}
+            {!active ? <Timer device={props.width < 600 ? 'mobile' : 'desktop'}/> : ''}
+            {active ? <Timer device={props.width < 600 ? 'mobile' : 'desktop'}/> : ''}
         </div>
     )
 })

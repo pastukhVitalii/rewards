@@ -15,7 +15,7 @@ const Login = React.memo((props: any) => {
     console.log('registered page');
 
 
-    const [email, setEmail] = useState('tytest077@gmail.com');
+    const [email, setEmail] = useState('test077@gmail.com');
     const [pass, setPass] = useState('test1234');
 
     const setEmailCallback = useCallback((e) => {
@@ -43,7 +43,7 @@ const Login = React.memo((props: any) => {
                 <div>{props.isAuth ? 'You are authorized' : ''}</div>
                 <Input type={''} placeholder={'e-mail'} value={email} onChange={setEmailCallback}/>
                 <Input type={''} placeholder={'password'} value={pass} onChange={setPasswordCallback}/>
-                <Button type={''} name={'Register'} spinner={false} disable={false} onClick={signInCallback}/>
+                <Button type={''} name={'Login'} spinner={false} disable={false} onClick={signInCallback}/>
             </div>
         </>
     );
