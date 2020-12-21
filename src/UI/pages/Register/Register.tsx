@@ -14,10 +14,10 @@ const Register = React.memo((props: any) => {
         console.log(db)
     })
 
-    const [firsName, setFirsName] = useState('Vitaliy');
-    const [lastName, setLastName] = useState('Pastukh');
-    const [email, setEmail] = useState('test077@gmail.com');
-    const [pass, setPass] = useState('test1234');
+    const [firsName, setFirsName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [email, setEmail] = useState('');
+    const [pass, setPass] = useState('');
 
     const setFirstNameCallback = useCallback((e) => {
         setFirsName(e.currentTarget.value)
@@ -47,8 +47,8 @@ const Register = React.memo((props: any) => {
         }
         firebase.auth().createUserWithEmailAndPassword(email, pass)
             .then(res => firebase.database().ref(`users/${firebase.auth().currentUser?.uid}`).set(name))
-            .then(props.history.replace('/timers'))
-            .catch((error: string) => console.log(error));
+            .then( res => props.history.replace('/timers'))
+            .catch((error: string) => alert(error));
     }
 
     return (
