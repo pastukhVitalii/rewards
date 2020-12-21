@@ -5,18 +5,12 @@ import firebase from "firebase";
 import {NavLink, withRouter} from "react-router-dom";
 import '../../../App.scss';
 
-
-type PropsType = {
-    setAuth: (isAuth: boolean) => void
-    history: any
-}
-
 const Login = React.memo((props: any) => {
 
     console.log('login page');
 
-    const [email, setEmail] = useState('test077@gmail.com');
-    const [pass, setPass] = useState('test1234');
+    const [email, setEmail] = useState('');
+    const [pass, setPass] = useState('');
 
     const setEmailCallback = useCallback((e) => {
         setEmail(e.currentTarget.value)
@@ -28,10 +22,8 @@ const Login = React.memo((props: any) => {
 
     const signInCallback = useCallback(() => {
         firebase.auth().signInWithEmailAndPassword(email, pass)
-            .then(res => {
-                props.setAuth(true);
-            }).then(props.history.replace('/timers'))
-            .catch(error => console.log(error))
+            .then(res => props.history.replace('/timers'))
+            .catch(error => alert(error))
     }, [props.setAuth, email, pass]);
 
     return (

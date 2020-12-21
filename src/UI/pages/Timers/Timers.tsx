@@ -4,11 +4,7 @@ import firebase from "firebase";
 import './Timers.scss';
 import {withRouter} from "react-router-dom";
 
-type PropsType = {
-    width: number
-}
-
-export const Timers = React.memo((props: any) => {
+const Timers = React.memo((props: any) => {
 
     const logOutCallback = useCallback(() => {
         firebase.auth().signOut()
@@ -17,7 +13,7 @@ export const Timers = React.memo((props: any) => {
             })
             .then(props.history.replace('/login'))
             .catch(error => console.log(error))
-    }, []);
+    }, [props.history]);
 
     const active = props.width < 760;
     console.log(active);
