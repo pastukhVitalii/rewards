@@ -23,8 +23,8 @@ export const Timers = React.memo((props: any) => {
     console.log(active);
     return (
         <div className={'timer_page'}>
-            <Timer active={!active} device={props.width < 760 ? 'mobile' : 'desktop'} title={'Desktop'}/>
-            <Timer active={active} device={!(props.width < 760) ? 'mobile' : 'desktop'} title={'Mobile'}/>
+            <Timer active={!active} device={'desktop'} title={'Desktop'}/>
+            <Timer active={active} device={'mobile'} title={'Mobile'}/>
             <span className={'log_out'} onClick={logOutCallback}>Log out</span>
         </div>
     )

@@ -15,12 +15,11 @@ export const Timer = React.memo((props: PropsType) => {
 
     useEffect(() => {
         firebase.auth().onAuthStateChanged(user => {
-            if (user) {
+            if (user?.uid) {
                 const db = firebase.database();
                 const ref = db.ref(`users/${user.uid}/time/${props.device}`);
                 ref.on('value', (snapshot) => {
-                    console.log(snapshot.val());
-                    setSeconds(snapshot.val());
+                    setSeconds(+snapshot.val());
                 });
             }
         })
@@ -52,7 +51,7 @@ export const Timer = React.memo((props: PropsType) => {
                 if (user) {
                     const db = firebase.database();
                     db.ref(`users/${user.uid}/time/${props.device}`).transaction(function () {
-                        return seconds
+                        return Number(seconds)
                     }).catch(error => console.log(error));
                     console.log('your data written to db');
                 }
@@ -61,6 +60,7 @@ export const Timer = React.memo((props: PropsType) => {
         }
     }, [seconds, setSeconds, props.device]);
 
+    console.log(props.device);
     return (
         <div>
             <div className={'timer_title'}>{props.title}</div>

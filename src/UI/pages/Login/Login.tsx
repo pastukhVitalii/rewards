@@ -13,8 +13,7 @@ type PropsType = {
 
 const Login = React.memo((props: any) => {
 
-    console.log('registered page');
-
+    console.log('login page');
 
     const [email, setEmail] = useState('test077@gmail.com');
     const [pass, setPass] = useState('test1234');
